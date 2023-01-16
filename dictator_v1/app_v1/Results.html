@@ -1,0 +1,16 @@
+{{ block title }}Resultados{{ endblock }}
+{{ block content }} 
+    <p>
+       {{ if player.player_role == 'recipient' }}
+            Usted es el Recipiente.
+        {{ else }}
+            Used es el Dictador.
+        {{ endif }}
+    </p>
+
+    <p>
+        Su pago final es
+        {{ player.payoff }}.
+    </p>
+
+{{ endblock }}

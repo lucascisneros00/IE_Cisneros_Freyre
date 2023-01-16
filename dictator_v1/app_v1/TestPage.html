@@ -1,0 +1,20 @@
+{{ block title }}TEST{{ endblock }}
+{{ block content }}
+    {{ include C.INSTRUCTIONS_TEMPLATE }}
+    <p>
+        [DEBUG PAGE]
+    </p>
+    <p>
+        {{ player.treatment }}
+
+        {{ if player.treatment == 'C'  }}
+            "CONTROL"
+        {{ else }}
+            "NOT CONTROL"
+        {{ endif }}
+
+        {{ player.player_role }}
+    </p>
+   
+    {{ next_button }}
+{{ endblock }}
