@@ -1,6 +1,58 @@
 {{ block title }}TEST{{ endblock }}
 {{ block content }}
-    {{ include C.INSTRUCTIONS_TEMPLATE }}
+<!-- STYLES-->
+
+<!-- DISPLAY-->
+<img src="{{ static 'global/mono_fachero.jpg' }}" alt "mono_fachero" width="200" draggable="false" />
+
+<body>
+    
+    <p id="text_appearing"></p>
+
+<script>
+  function displayTextSequentially(text, interval) {
+    let i = 0;
+    const displayText = setInterval(function() {
+      if (i < text.length) {
+        document.getElementById("text_appearing").innerHTML += text.charAt(i);
+        i++;
+      } else {
+        clearInterval(displayText);
+      }
+    }, interval);
+  }
+
+  // Example usage: display "Hello, world!" with a delay of 70 milliseconds between each character
+  var js_treatment = ("{{ player.player_role }}"==="dictator" ? "Asignador" : "Receptor");
+  var input_text = "Muchas gracias por participar, eres " + js_treatment
+  displayTextSequentially(input_text, 70);
+</script>
+
+</body>
+
+<!-- DISPLAY: texto aleatorio-->
+<div>
+    <p id="random_text1"></p>
+    <script>
+      const chars_num = "0123456789";
+      let random_text1 = "";
+      let random_text2 = "";
+      var js_treatment = "{{ player.player_role }}";
+      for (let i = 0; i < 3; i++) {
+        random_text1 += chars_num.charAt(Math.floor(Math.random() * chars_num.length));
+      }
+      document.getElementById("random_text1").innerHTML = random_text1;
+      setInterval(function() {
+        random_text1 = "";
+        random_text2 = "";
+        for (let i = 0; i < 3; i++) {
+          random_text1 += chars_num.charAt(Math.floor(Math.random() * chars_num.length));
+        }
+        document.getElementById("random_text1").innerHTML = "Asignador #" + random_text1 ;
+      }, 75);
+    </script>
+  </body>
+
     <p>
         [DEBUG PAGE]
     </p>

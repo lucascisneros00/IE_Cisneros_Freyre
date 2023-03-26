@@ -16,9 +16,8 @@ class C(BaseConstants):
     NAME_IN_URL = 'dictator'
     PLAYERS_PER_GROUP = 2
     NUM_ROUNDS = 1
-    INSTRUCTIONS_TEMPLATE = 'app_v1/instructions.html'
     # Initial amount allocated to the dictator
-    ENDOWMENT = cu(100)
+    ENDOWMENT = cu(20)
 
 
 
@@ -30,6 +29,20 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+
+    sexo = models.StringField(
+        label="Seleccione su género",
+        choices=["Hombre", "Mujer", "Otro", "Prefiero no decir"]
+    )
+    edad = models.IntegerField(label="Introduzca su edad")
+    carrera = models.StringField(
+        label="Seleccione su carrera",
+        choices=["Administración", "Contabilidad", "Derecho", "Economía", "Finanzas", "Ingenieria de la Información", "Ingeniería Empresarial", "Marketing", "Negocios Internacionales"]
+    )
+    ciclo = models.IntegerField(label="Introduzca en qué ciclo se encuentra (número)")
+    distrito_de_residencia = models.StringField(label="Introduzca su distrito de residencia")
+
+
     treatment = models.StringField(initial='C')
     player_role = models.StringField(initial='dictator')
 
@@ -37,8 +50,10 @@ class Player(BasePlayer):
         doc="""Amount dictator decided to give""",
         min=0,
         max=C.ENDOWMENT,
-        label="Decido donar al recipiente",
+        label="",
     )
+    dictator_donation = models.CurrencyField(initial=0)
+    recipient_donation = models.CurrencyField(initial=0)
 
 
 # FUNCTIONS
@@ -58,6 +73,11 @@ def set_payoffs(group: Group):
         if player.player_role == "recipient": recipient=player
     dictator.payoff = C.ENDOWMENT - dictator.donation
     recipient.payoff = dictator.donation
+
+    dictator.dictator_donation = dictator.donation
+    dictator.recipient_donation = recipient.donation 
+    recipient.dictator_donation = dictator.donation
+    recipient.recipient_donation = recipient.donation 
 
 
 # PAGES
@@ -86,11 +106,17 @@ class ExposureT2(Page):
     def is_displayed(player: Player):
         return player.treatment == 'T2'
 
-class Donation(Page):
+class Decision(Page):
     form_model = 'player'
     form_fields = ['donation']
 
+class Instructions(Page):
+    pass
+
 class TestPage(Page):
+    pass
+
+class TestPage2(Page):
     pass
 
 class ResultsWaitPage(WaitPage):
@@ -99,8 +125,73 @@ class ResultsWaitPage(WaitPage):
 class Results(Page):
     pass
 
-page_sequence = [WaitAssign, 
-        # TestPage,
-        ExposureControl, ExposureT1, ExposureT2,
-        Donation,
-        ResultsWaitPage, Results]
+class _0_Formulario(Page):
+    form_model = "player"
+    form_fields = ["sexo", "edad", "carrera", "ciclo", "distrito_de_residencia"]
+    pass
+
+class _1_Instrucciones_1(Page):
+    pass
+class _2_Instrucciones_2(Page):
+    pass
+class _3_Exposure_0(Page):
+    pass
+class _4_ExposureControl(Page):
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.treatment == 'C'
+    
+class _5_ExposureT1(Page):
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.treatment == 'T1'
+
+class _6_ExposureT2(Page):
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.treatment == 'T2'
+    
+class _7_Decision_C_T1(Page):
+    form_model = 'player'
+    form_fields = ['donation']
+    
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.treatment in ['C','T1']
+class _8_Decision_T2(Page):
+    form_model = 'player'
+    form_fields = ['donation']
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.treatment == 'T2'
+    
+class _9_Resultados(Page):
+    @staticmethod
+    def vars_for_template(player):
+        dictator_donation = player.dictator_donation
+        recipient_donation = player.recipient_donation
+
+        player_payoff = player.payoff
+        player_donation =  player.donation 
+        return dict(
+            player_payoff=player_payoff,
+            player_donation=player_donation,
+            player_finalpayoff = player_payoff+8,
+
+            dictator_donation = dictator_donation,
+            recipient_donation = recipient_donation
+        )
+class _10_Informacion_Final(Page):
+    pass 
+page_sequence = [
+        #TestPage,TestPage2, 
+        _0_Formulario,
+        _1_Instrucciones_1, _2_Instrucciones_2,
+        WaitAssign,
+        _3_Exposure_0,
+        _4_ExposureControl, _5_ExposureT1, _6_ExposureT2, 
+        _7_Decision_C_T1,  _8_Decision_T2,
+        ResultsWaitPage,
+        _9_Resultados,
+        _10_Informacion_Final]

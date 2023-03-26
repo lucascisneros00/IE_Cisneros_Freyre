@@ -2,6 +2,33 @@
 {% load otree static %}
 
 {% block global_styles  %}
+<style>
+    @font-face {
+      font-family: 'dotumche-pixel';
+      src: url(fonts/dotumche-pixel.ttf);
+    }
+    body {
+        background-color: black;
+        font-family: 'dotumche-pixel', sans-serif;
+        font-size: 24px;
+        color: white;
+        text-align: center;
+    }
+    #container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    } 
+    #text-container span {
+        opacity: 0;
+      }
+ 
+</style>
 {% endblock %}
 
 {% block global_scripts  %}
