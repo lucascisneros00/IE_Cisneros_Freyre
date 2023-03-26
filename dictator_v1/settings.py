@@ -8,7 +8,7 @@ SESSION_CONFIGS = [
     # ),
     dict(
         name='dictator',
-        app_sequence=['app_v1', 'payment_info'],
+        app_sequence=['app_v1'],
         num_demo_participants=6,
     ),
 ]
