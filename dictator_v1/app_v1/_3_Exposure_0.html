@@ -68,28 +68,40 @@
         }, 100 * spans.length);
       }
 
-      function generateTexts_v2(texts, displayInterval, parentElement) {
-        var i = 0;
+      function generateTexts_v2(texts, displayInterval, parentElement, callback) {
+      var i = 0;
 
-        function displayNextText() {
-          if (i < texts.length) {
-            var textElement = document.createElement("div");
-            textElement.id = "text" + i;
-            parentElement.appendChild(textElement);
-            displayTextSequentially_v2(texts[i], textElement, function() {
-              i++;
-              setTimeout(displayNextText, displayInterval);
-            });
+      function displayNextText() {
+        if (i < texts.length) {
+          var textElement = document.createElement("div");
+          textElement.id = "text" + i;
+          parentElement.appendChild(textElement);
+          displayTextSequentially_v2(texts[i], textElement, function() {
+            i++;
+            setTimeout(displayNextText, displayInterval);
+          });
+        } else {
+          if (callback) {
+            callback();
           }
         }
-
-        displayNextText();
       }
+
+      displayNextText();
+    }
+  </script>
+     <!-- Wrap the default oTree "Next" button in a div with an ID and initially set its style to "display:none" -->
+ <div id="next-btn-wrapper" style="display:none;">
+  {{ next_button }}
+</div>
+<script>
       var input1 = "Por ejemplo, así acaba de jugar una pareja..."
-      generateTexts_v2([input1], 500, document.getElementById("text-container"));
+      generateTexts_v2([input1], 500, document.getElementById("text-container"),
+      function() {
+        $('#next-btn-wrapper').fadeIn();
+      }
+    );
     </script>
   </body>
 
-
-{{ next_button }}
 {{ endblock }}

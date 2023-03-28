@@ -68,23 +68,33 @@
         }, 100 * spans.length);
       }
 
-      function generateTexts_v2(texts, displayInterval, parentElement) {
-        var i = 0;
+      function generateTexts_v2(texts, displayInterval, parentElement, callback) {
+      var i = 0;
 
-        function displayNextText() {
-          if (i < texts.length) {
-            var textElement = document.createElement("div");
-            textElement.id = "text" + i;
-            parentElement.appendChild(textElement);
-            displayTextSequentially_v2(texts[i], textElement, function() {
-              i++;
-              setTimeout(displayNextText, displayInterval);
-            });
+      function displayNextText() {
+        if (i < texts.length) {
+          var textElement = document.createElement("div");
+          textElement.id = "text" + i;
+          parentElement.appendChild(textElement);
+          displayTextSequentially_v2(texts[i], textElement, function() {
+            i++;
+            setTimeout(displayNextText, displayInterval);
+          });
+        } else {
+          if (callback) {
+            callback();
           }
         }
-
-        displayNextText();
       }
+
+      displayNextText();
+    }
+    </script>
+     <!-- Wrap the default oTree "Next" button in a div with an ID and initially set its style to "display:none" -->
+ <div id="next-btn-wrapper" style="display:none;">
+  {{ next_button }}
+</div>
+<script>
       var input1 = "En este juego serás aleatoriamente emparejado con otro participante de esta sesión. No conocerás su identidad y él o ella no conocerá la tuya."
       var input2 = "En el juego habrá dos roles."
       var input3 = "El ASIGNADOR recibirá una dotación inicial de 20,00 PEN y decidirá cuánto transferir a su pareja. Puede elegir cualquier monto entre 0,00 y 20,00 PEN."
@@ -96,10 +106,12 @@
                         input3,
                         input4,
                         "* * *",
-                        input5], 200, document.getElementById("text-container"));
+                        input5], 200, document.getElementById("text-container"),
+      function() {
+        $('#next-btn-wrapper').fadeIn();
+      }
+    );
     </script>
   </body>
 
-
-{{ next_button }}
 {{ endblock }}

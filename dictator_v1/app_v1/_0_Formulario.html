@@ -33,6 +33,9 @@
       color: black; 
       font-size: 1rem; 
     }
+    .col-form-label {
+      font-size: 16px;
+    }
     .controls {
       text-align: center; 
       margin: 0 auto;
@@ -76,32 +79,82 @@
         }, 100 * spans.length);
       }
 
-      function generateTexts_v2(texts, displayInterval, parentElement) {
-        var i = 0;
+      function generateTexts_v2(texts, displayInterval, parentElement, callback) {
+      var i = 0;
 
-        function displayNextText() {
-          if (i < texts.length) {
-            var textElement = document.createElement("div");
-            textElement.id = "text" + i;
-            parentElement.appendChild(textElement);
-            displayTextSequentially_v2(texts[i], textElement, function() {
-              i++;
-              setTimeout(displayNextText, displayInterval);
-            });
+      function displayNextText() {
+        if (i < texts.length) {
+          var textElement = document.createElement("div");
+          textElement.id = "text" + i;
+          parentElement.appendChild(textElement);
+          displayTextSequentially_v2(texts[i], textElement, function() {
+            i++;
+            setTimeout(displayNextText, displayInterval);
+          });
+        } else {
+          if (callback) {
+            callback();
           }
         }
-
-        displayNextText();
       }
-      var js_var_treat = "{{ player.id_in_group }}" ;
-      var input1 = "¡Hola Participante X!"
-      var input2 = "Bienvenido a este experimento. Para comenzar, necesitamos que llenes los siguientes datos:"
-      
-      generateTexts_v2([input1,
-                      input2], 300, document.getElementById("text-container"));
-    </script>
-  </body>
 
-  {{ formfields }}
-{{ next_button }}
+      displayNextText();
+    }
+    </script>
+    
+<div id="sexo-form" style="display:none;">
+  {% formfield player.sexo %}
+</div>
+<div id="edad-form" style="display:none;">
+  {% formfield player.edad %}
+</div>
+<div id="carrera-form" style="display:none;">
+  {% formfield player.carrera %}
+</div>
+<div id="ciclo-form" style="display:none;">
+  {% formfield player.ciclo %}
+</div>
+<div id="distrito-de-residencia-form" style="display:none;">
+  {% formfield player.distrito_de_residencia %}
+</div>
+ <!-- Wrap the default oTree "Next" button in a div with an ID and initially set its style to "display:none" -->
+ <div id="next-btn-wrapper" style="display:none;">
+  {{ next_button }}
+</div>
+<script>
+  $(document).ready(function() {
+    // set up event listeners for the input fields
+    $('#id_sexo').on('change', function() {
+      $('#edad-form').fadeIn();
+    });
+    $('#id_edad').on('change', function() {
+      $('#carrera-form').fadeIn();
+    });
+    $('#id_carrera').on('change', function() {
+      $('#ciclo-form').fadeIn();
+    });
+    $('#id_ciclo').on('change', function() {
+    $('#distrito-de-residencia-form').fadeIn();
+  });
+
+  // show the "Next" button when the "distrito_de_residencia" field is changed
+  $('#id_distrito_de_residencia').on('change', function() {
+    $('#next-btn-wrapper').fadeIn();
+  });
+});
+
+  var input1 = "¡Hola Participante X!"
+  var input2 = "Bienvenido a este experimento. Para comenzar, necesitamos que llenes los siguientes datos:"
+  
+  generateTexts_v2(
+    [input1, input2], 
+    300, 
+    document.getElementById("text-container"), 
+    function() {
+      $('#sexo-form').fadeIn();
+    }
+  );
+</script>
+</div>
+
 {{ endblock }}

@@ -67,23 +67,33 @@
         }, 100 * spans.length);
       }
 
-      function generateTexts_v2(texts, displayInterval, parentElement) {
-        var i = 0;
+      function generateTexts_v2(texts, displayInterval, parentElement, callback) {
+      var i = 0;
 
-        function displayNextText() {
-          if (i < texts.length) {
-            var textElement = document.createElement("div");
-            textElement.id = "text" + i;
-            parentElement.appendChild(textElement);
-            displayTextSequentially_v2(texts[i], textElement, function() {
-              i++;
-              setTimeout(displayNextText, displayInterval);
-            });
+      function displayNextText() {
+        if (i < texts.length) {
+          var textElement = document.createElement("div");
+          textElement.id = "text" + i;
+          parentElement.appendChild(textElement);
+          displayTextSequentially_v2(texts[i], textElement, function() {
+            i++;
+            setTimeout(displayNextText, displayInterval);
+          });
+        } else {
+          if (callback) {
+            callback();
           }
         }
-
-        displayNextText();
       }
+
+      displayNextText();
+    }
+  </script>
+     <!-- Wrap the default oTree "Next" button in a div with an ID and initially set its style to "display:none" -->
+ <div id="next-btn-wrapper" style="display:none;">
+  {{ next_button }}
+</div>
+<script>
       if ("{{ player.player_role }}"==="dictator") { 
             var input1 = "Has sido asignado aleatoriamente al rol de... ASIGNADOR."
 
@@ -114,11 +124,13 @@
                     input4, 
                     input5, 
                     "* * *",
-                    "Muchas gracias por participar!"], 300, document.getElementById("text-container"));
+                    "Muchas gracias por participar!"], 300, document.getElementById("text-container"),
+      function() {
+        $('#next-btn-wrapper').fadeIn();
+      }
+    );
     </script>
   </body>
 
-
-{{ next_button }}
 {{ endblock }}
 

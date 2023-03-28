@@ -68,31 +68,54 @@
         }, 100 * spans.length);
       }
 
-      function generateTexts_v2(texts, displayInterval, parentElement) {
-        var i = 0;
+      function generateTexts_v2(texts, displayInterval, parentElement, callback) {
+      var i = 0;
 
-        function displayNextText() {
-          if (i < texts.length) {
-            var textElement = document.createElement("div");
-            textElement.id = "text" + i;
-            parentElement.appendChild(textElement);
-            displayTextSequentially_v2(texts[i], textElement, function() {
-              i++;
-              setTimeout(displayNextText, displayInterval);
-            });
+      function displayNextText() {
+        if (i < texts.length) {
+          var textElement = document.createElement("div");
+          textElement.id = "text" + i;
+          parentElement.appendChild(textElement);
+          displayTextSequentially_v2(texts[i], textElement, function() {
+            i++;
+            setTimeout(displayNextText, displayInterval);
+          });
+        } else {
+          if (callback) {
+            callback();
           }
         }
-
-        displayNextText();
       }
+
+      displayNextText();
+    }
+    </script>
+
+<div id="donation-form" style="display:none;">
+  {% formfield player.donation %}
+</div>   
+     <!-- Wrap the default oTree "Next" button in a div with an ID and initially set its style to "display:none" -->
+ <div id="next-btn-wrapper" style="display:none;">
+  {{ next_button }}
+</div>
+<script>
+  $(document).ready(function() {
+  // show the "Next" button when the "donation" field is changed
+  $('#donation-form').on('change', function() {
+    $('#next-btn-wrapper').fadeIn();
+  });
+});
+
       var input1 = "Ahora, decide el monto que transferirás a tu pareja, en caso fueras asignado al rol de ASIGNADOR..."
       var input2 = "Recuerda que los investigadores deben conocer tu identidad para determinar los pagos..."
       generateTexts_v2([input1,
                         "* * *",
-                        input2], 300, document.getElementById("text-container"));
+                        input2], 150, document.getElementById("text-container"), 
+    function() {
+      $('#donation-form').fadeIn();
+    }
+  );
     </script>
   </body>
 
-  {{ formfields }}
-{{ next_button }}
 {{ endblock }}

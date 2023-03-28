@@ -40,56 +40,55 @@
 
 <!-- SCRIPTS-->
 <body>
-    <div id="text-container"></div>
-    <script>
-      function displayTextSequentially_v2(text, element, callback) {
-        var letters = text.split("");
-        var i = 0;
+  <div id="text-container"></div>
+  <script>
+    function displayTextSequentially_v2(text, element, callback) {
+      var letters = text.split("");
+      var i = 0;
 
-        for (var j = 0; j < letters.length; j++) {
-          var span = document.createElement("span");
-          span.innerHTML = letters[j];
-          element.appendChild(span);
-        }
-
-        var spans = element.getElementsByTagName("span");
-        for (var k = 0; k < spans.length; k++) {
-          (function(index) {
-            setTimeout(function() {
-              spans[index].style.opacity = 1;
-            }, 70 * index);
-          })(k);
-        }
-
-        setTimeout(function() {
-          if (callback) {
-            callback();
-          }
-        }, 100 * spans.length);
+      for (var j = 0; j < letters.length; j++) {
+        var span = document.createElement("span");
+        span.innerHTML = letters[j];
+        element.appendChild(span);
       }
 
-      function generateTexts_v2(texts, displayInterval, parentElement) {
-        var i = 0;
-
-        function displayNextText() {
-          if (i < texts.length) {
-            var textElement = document.createElement("div");
-            textElement.id = "text" + i;
-            parentElement.appendChild(textElement);
-            displayTextSequentially_v2(texts[i], textElement, function() {
-              i++;
-              setTimeout(displayNextText, displayInterval);
-            });
-          }
-        }
-
-        displayNextText();
+      var spans = element.getElementsByTagName("span");
+      for (var k = 0; k < spans.length; k++) {
+        (function(index) {
+          setTimeout(function() {
+            spans[index].style.opacity = 1;
+          }, 70 * index);
+        })(k);
       }
-      var input1 = "Su código de confirmación de culminación del experimento es [código aleatorio]. Le recordamos que lo anote para poder proceder con su pago."
-      generateTexts_v2([input1], 300, document.getElementById("text-container"));
-    </script>
-  </body>
+
+      setTimeout(function() {
+        if (callback) {
+          callback();
+        }
+      }, 100 * spans.length);
+    }
+
+    function generateTexts_v2(texts, displayInterval, parentElement) {
+      var i = 0;
+
+      function displayNextText() {
+        if (i < texts.length) {
+          var textElement = document.createElement("div");
+          textElement.id = "text" + i;
+          parentElement.appendChild(textElement);
+          displayTextSequentially_v2(texts[i], textElement, function() {
+            i++;
+            setTimeout(displayNextText, displayInterval);
+          });
+        }
+      }
+
+      displayNextText();
+    }
+    var input1 = "Su código de confirmación de culminación del experimento es [código aleatorio]. Le recordamos que lo anote para poder proceder con su pago."
+    generateTexts_v2([input1], 300, document.getElementById("text-container"));
+  </script>
+</body>
 
 
-{{ next_button }}
 {{ endblock }}
