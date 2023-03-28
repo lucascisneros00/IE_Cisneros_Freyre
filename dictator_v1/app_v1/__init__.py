@@ -31,16 +31,16 @@ class Group(BaseGroup):
 class Player(BasePlayer):
 
     sexo = models.StringField(
-        label="Seleccione su género",
+        label="Selecciona tu género",
         choices=["Hombre", "Mujer", "Otro", "Prefiero no decir"]
     )
-    edad = models.IntegerField(label="Introduzca su edad")
+    edad = models.IntegerField(label="Introduce tu edad")
     carrera = models.StringField(
-        label="Seleccione su carrera",
+        label="Selecciona tu carrera",
         choices=["Administración", "Contabilidad", "Derecho", "Economía", "Finanzas", "Ingenieria de la Información", "Ingeniería Empresarial", "Marketing", "Negocios Internacionales"]
     )
-    ciclo = models.IntegerField(label="Introduzca en qué ciclo se encuentra (número)")
-    distrito_de_residencia = models.StringField(label="Introduzca su distrito de residencia")
+    ciclo = models.IntegerField(label="Introduce en qué ciclo te encuentras (número)")
+    distrito_de_residencia = models.StringField(label="Introduce tu distrito de residencia")
 
 
     treatment = models.StringField(initial='C')
