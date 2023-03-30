@@ -191,7 +191,17 @@ class _9_Resultados(Page):
             recipient_donation = recipient_donation
         )
 class _10_Informacion_Final(Page):
-    pass 
+    @staticmethod
+    def vars_for_template(player):
+
+        player_payoff = player.payoff
+        player_donation =  player.donation 
+        return dict(
+            player_payoff=player_payoff,
+            player_donation=player_donation,
+            player_finalpayoff = player_payoff+8,
+        )
+     
 page_sequence = [
         #TestPage,TestPage2, 
         WaitAssign,
