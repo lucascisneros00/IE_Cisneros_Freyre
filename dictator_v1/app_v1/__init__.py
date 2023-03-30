@@ -1,7 +1,7 @@
 from otree.api import *
 import random
 import itertools
-
+import time
 
 doc = """
 One player decides how to divide a certain amount between himself and the other
@@ -52,9 +52,13 @@ class Player(BasePlayer):
         max=C.ENDOWMENT,
         label="",
     )
-    dictator_donation = models.CurrencyField(initial=0)
-    recipient_donation = models.CurrencyField(initial=0)
-
+    dictator_donation = models.CurrencyField(min=0,
+        max=C.ENDOWMENT,)
+    recipient_donation = models.CurrencyField(min=0,
+        max=C.ENDOWMENT,)
+    
+    order_number = models.IntegerField()
+    random_code = models.IntegerField()
 
 # FUNCTIONS
 def creating_session(subsession: Subsession):
@@ -66,6 +70,11 @@ def creating_session(subsession: Subsession):
             player.treatment = 'T1' #f't{i}_{player}'
         else:
             player.treatment = 'T2' #f't{i}_{player}'
+    
+    # Generate unique ID
+    for i, p in enumerate(subsession.get_players(), start=1):
+        p.order_number = i
+        p.random_code = random.randint(1,1000)
            
 def set_payoffs(group: Group):
     for player in group.get_players():
@@ -128,7 +137,6 @@ class Results(Page):
 class _0_Formulario(Page):
     form_model = "player"
     form_fields = ["sexo", "edad", "carrera", "ciclo", "distrito_de_residencia"]
-    pass
 
 class _1_Instrucciones_1(Page):
     pass

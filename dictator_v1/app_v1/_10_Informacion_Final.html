@@ -85,8 +85,11 @@
 
       displayNextText();
     }
-    var input1 = "Tu código de confirmación de culminación del experimento es [código aleatorio]. Te recordamos que lo anotes para poder proceder con tu pago."
-    var input2 = "Para la realización del pago, deberás previamente llenar y firmar el Recibo de Recepción de Pago con el monto indicado: [20-X+8; X+8 soles] y enviar el documento escaneado a los correos l.cisnerosd@alum.up.edu.pe y a.freyrea@alum.up.edu.pe a la brevedad posible."
+    var js_random_code = "{{ player.random_code }}"
+    var js_finalpayoff = "{{ player_finalpayoff }}"
+
+    var input1 = "Tu código de confirmación de culminación del experimento es " + js_random_code + ". Te recordamos que lo anotes para poder proceder con tu pago."
+    var input2 = "Para la realización del pago, deberás previamente llenar y firmar el Recibo de Recepción de Pago con el monto indicado:" + js_finalpayoff + " y enviar el documento escaneado a los correos l.cisnerosd@alum.up.edu.pe y a.freyrea@alum.up.edu.pe a la brevedad posible."
     var input3 = "En dicho correo, deberás indicar el código de confirmación, la billetera digital de tu preferencia (Yape o Plin), así como el número de teléfono asociado. Luego del envío de dicho correo, tu pago será procesado en un máximo de 48 horas y se te enviará un correo de confirmación del pago."
     generateTexts_v2([input1,input2,input3], 100, document.getElementById("text-container"));
   </script>

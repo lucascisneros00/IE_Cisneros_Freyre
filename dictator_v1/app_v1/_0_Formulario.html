@@ -142,13 +142,13 @@
     $('#next-btn-wrapper').fadeIn();
   });
 });
-
-  var input1 = "¡Hola Participante X!"
+   var js_order_number = "{{ player.order_number }}"
+  var input1 = "¡Hola Participante " + js_order_number + "!"
   var input2 = "Bienvenido a este experimento. Para comenzar, necesitamos que llenes los siguientes datos:"
   
   generateTexts_v2(
     [input1, input2], 
-    300, 
+    200, 
     document.getElementById("text-container"), 
     function() {
       $('#sexo-form').fadeIn();
