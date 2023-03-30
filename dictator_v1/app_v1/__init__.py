@@ -194,9 +194,9 @@ class _10_Informacion_Final(Page):
     pass 
 page_sequence = [
         #TestPage,TestPage2, 
+        WaitAssign,
         _0_Formulario,
         _1_Instrucciones_1, _2_Instrucciones_2,
-        WaitAssign,
         _3_Exposure_0,
         _4_ExposureControl, _5_ExposureT1, _6_ExposureT2, 
         _7_Decision_C_T1,  _8_Decision_T2,

@@ -40,19 +40,20 @@
   <video autoplay muted id="video-player">
     <source src="{{ static 'global/animation_control.mp4' }}" type="video/mp4">
   </video>
+
+  <script>
+    var videoPlayer = document.getElementById('video-player');
+
+    // Listen for the 'ended' event on the video element
+    videoPlayer.addEventListener('ended', function() {
+      $('#next-btn-wrapper').fadeIn();
+    });
+  </script>
+
+  <!-- Wrap the default oTree "Next" button in a div with an ID and initially set its style to "display:none" -->
+  <div id="next-btn-wrapper" style="display:none;">
+    {{ next_button }}
+  </div>
 </body>
- <!-- Wrap the default oTree "Next" button in a div with an ID and initially set its style to "display:none" -->
- <div id="next-btn-wrapper" style="display:none;">
-  {{ next_button }}
-</div>
-
-<script>
-  var videoPlayer = document.getElementById('video-player');
-
-  // Listen for the 'ended' event on the video element
-  videoPlayer.addEventListener('ended', function() {
-    $('#next-btn-wrapper').fadeIn();
-  });
-</script>
 
 {{ endblock }}
