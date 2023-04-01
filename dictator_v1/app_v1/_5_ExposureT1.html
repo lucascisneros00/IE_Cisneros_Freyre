@@ -37,23 +37,21 @@
 
 
 <body>
-  <video autoplay muted>
+  <video id="video-player" autoplay muted>
     <source src="{{ static 'global/animation_treatment.mp4' }}" type="video/mp4">
   </video>
-</body>
+  <script>
+    var videoPlayer = document.getElementById('video-player');
 
-<script>
-  var videoPlayer = document.getElementById('video-player');
+    // Listen for the 'ended' event on the video element
+    videoPlayer.addEventListener('ended', function() {
+      $('#next-btn-wrapper').fadeIn();
+    });
+  </script>
 
-  // Listen for the 'ended' event on the video element
-  videoPlayer.addEventListener('ended', function() {
-    $('#next-btn-wrapper').fadeIn();
-  });
-</script>
-
-<!-- Wrap the default oTree "Next" button in a div with an ID and initially set its style to "display:none" -->
-<div id="next-btn-wrapper" style="display:none;">
-  {{ next_button }}
-</div>
+  <!-- Wrap the default oTree "Next" button in a div with an ID and initially set its style to "display:none" -->
+  <div id="next-btn-wrapper" style="display:none;">
+    {{ next_button }}
+  </div>
 </body>
 {{ endblock }}
