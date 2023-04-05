@@ -2,71 +2,21 @@
 {{ block content }}
 <!-- STYLES-->
 
-<!-- DISPLAY-->
-<img src="{{ static 'global/mono_fachero.jpg' }}" alt "mono_fachero" width="200" draggable="false" />
-
 <body>
+
+    <p>Move the slider to decide how much to give.</p>
+
+    <input type="range" name="give" min="0" max="{{ C.ENDOWMENT }}" oninput="updateDescription(this)">
+    <p id="description"></p>
+    <!-- by leaving the description blank initially, we prompt the user to move the slider,
+    reducing the anchoring/default effect. -->
     
-    <p id="text_appearing"></p>
-
-<script>
-  function displayTextSequentially(text, interval) {
-    let i = 0;
-    const displayText = setInterval(function() {
-      if (i < text.length) {
-        document.getElementById("text_appearing").innerHTML += text.charAt(i);
-        i++;
-      } else {
-        clearInterval(displayText);
-      }
-    }, interval);
-  }
-
-  // Example usage: display "Hello, world!" with a delay of 70 milliseconds between each character
-  var js_treatment = ("{{ player.player_role }}"==="dictator" ? "Asignador" : "Receptor");
-  var input_text = "Muchas gracias por participar, eres " + js_treatment
-  displayTextSequentially(input_text, 70);
-</script>
-
-</body>
-
-<!-- DISPLAY: texto aleatorio-->
-<div>
-    <p id="random_text1"></p>
     <script>
-      const chars_num = "0123456789";
-      let random_text1 = "";
-      let random_text2 = "";
-      var js_treatment = "{{ player.player_role }}";
-      for (let i = 0; i < 3; i++) {
-        random_text1 += chars_num.charAt(Math.floor(Math.random() * chars_num.length));
-      }
-      document.getElementById("random_text1").innerHTML = random_text1;
-      setInterval(function() {
-        random_text1 = "";
-        random_text2 = "";
-        for (let i = 0; i < 3; i++) {
-          random_text1 += chars_num.charAt(Math.floor(Math.random() * chars_num.length));
+        let description = document.getElementById('description');
+        function updateDescription(input) {
+            let give = parseInt(input.value);
+            description.innerText = `${give},00 PEN.`
         }
-        document.getElementById("random_text1").innerHTML = "Asignador #" + random_text1 ;
-      }, 75);
     </script>
-  </body>
-
-    <p>
-        [DEBUG PAGE]
-    </p>
-    <p>
-        {{ player.treatment }}
-
-        {{ if player.treatment == 'C'  }}
-            "CONTROL"
-        {{ else }}
-            "NOT CONTROL"
-        {{ endif }}
-
-        {{ player.player_role }}
-    </p>
-   
     {{ next_button }}
 {{ endblock }}
