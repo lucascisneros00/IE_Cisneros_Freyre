@@ -105,13 +105,6 @@ def set_payoffs(group: Group):
 
 
 # PAGES (test)
-class WaitAssign(WaitPage):
-    @staticmethod
-    def after_all_players_arrive(group: Group):
-        for player in group.get_players():    
-            if player.id_in_group==1: player.player_role = 'dictator'
-            if player.id_in_group==2: player.player_role = 'recipient'
-
 class TestPage(Page):
     @staticmethod
     def js_vars(player: Player):
@@ -120,44 +113,50 @@ class TestPage(Page):
 class TestPage2(Page):
     pass
 
+## PAGES 
+class WaitAssign(WaitPage):
+    @staticmethod
+    def after_all_players_arrive(group: Group):
+        for player in group.get_players():    
+            if player.id_in_group==1: player.player_role = 'dictator'
+            if player.id_in_group==2: player.player_role = 'recipient'
+
 class ResultsWaitPage(WaitPage):
     after_all_players_arrive = set_payoffs
 
-
-## PAGES 
-class _0_Formulario(Page):
+class _0_page(Page):
     form_model = "player"
     form_fields = ["sexo", "edad", "carrera", "ciclo", "distrito_de_residencia"]
 
-class _1_Instrucciones_1(Page):
+class _1_page(Page):
     pass
-class _2_Instrucciones_2(Page):
+class _2_page(Page):
     pass
-class _3_Exposure_0(Page):
+class _3_page(Page):
     pass
-class _4_ExposureControl(Page):
+class _4_page(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.treatment == 'C'
     
-class _5_ExposureT1(Page):
+class _5_page(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.treatment == 'T1'
 
-class _6_ExposureT2(Page):
+class _6_page(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.treatment == 'T2'
     
-class _7_Decision_C_T1(Page):
+class _7_page(Page):
     form_model = 'player'
     form_fields = ['donation']
     
     @staticmethod
     def is_displayed(player: Player):
         return player.treatment in ['C','T1']
-class _8_Decision_T2(Page):
+class _8_page(Page):
     form_model = 'player'
     form_fields = ['donation']
 
@@ -165,7 +164,7 @@ class _8_Decision_T2(Page):
     def is_displayed(player: Player):
         return player.treatment == 'T2'
     
-class _9_Resultados(Page):
+class _9_page(Page):
     @staticmethod
     def vars_for_template(player):
         dictator_donation = player.dictator_donation
@@ -181,7 +180,7 @@ class _9_Resultados(Page):
             dictator_donation = dictator_donation,
             recipient_donation = recipient_donation
         )
-class _10_Informacion_Final(Page):
+class _10_page(Page):
     @staticmethod
     def vars_for_template(player):
 
@@ -196,11 +195,11 @@ class _10_Informacion_Final(Page):
 page_sequence = [
         # TestPage,TestPage2, 
         WaitAssign,
-        _0_Formulario,
-        _1_Instrucciones_1, _2_Instrucciones_2,
-        _3_Exposure_0,
-        _4_ExposureControl, _5_ExposureT1, _6_ExposureT2, 
-        _7_Decision_C_T1,  _8_Decision_T2,
+        _0_page,
+        _1_page, _2_page,
+        _3_page,
+        _4_page, _5_page, _6_page, 
+        _7_page,  _8_page,
         ResultsWaitPage,
-        _9_Resultados,
-        _10_Informacion_Final]
+        _9_page,
+        _10_page]
