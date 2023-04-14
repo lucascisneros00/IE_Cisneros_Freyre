@@ -39,6 +39,11 @@ ROOMS = [
         display_name='Econ 101 class',
         participant_label_file='_rooms/econ101.txt',
     ),
+    dict(
+        name='e2labup',
+        display_name='E2LabUP - Room para sesiones online',
+        participant_label_file='_rooms/e2labup-room.txt',
+    ),
     dict(name='live_demo', display_name='Room for live demo (no participant labels)'),
 ]
 
