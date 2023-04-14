@@ -114,6 +114,12 @@ class TestPage2(Page):
     pass
 
 ## PAGES 
+class E2lab_InitialPage(Page):
+    #En caso sea más  de una ronda
+    #def is_displayed(self):
+    #    return self.round_number == 1
+    pass
+
 class WaitAssign(WaitPage):
     @staticmethod
     def after_all_players_arrive(group: Group):
@@ -191,9 +197,17 @@ class _10_page(Page):
             player_donation=player_donation,
             player_finalpayoff = player_payoff+8,
         )
+    
+class E2lab_FinalPage(Page):
+    #Si hubiera más de una ronda:
+    #def is_displayed(self):
+    #    return self.round_number == Constants.num_rounds
+    def vars_for_template(self):
+        return dict(participant_id=self.participant.label)
      
 page_sequence = [
         # TestPage,TestPage2, 
+        E2lab_InitialPage,
         WaitAssign,
         _0_page,
         _1_page, _2_page,
@@ -202,4 +216,5 @@ page_sequence = [
         _7_page,  _8_page,
         ResultsWaitPage,
         _9_page,
-        _10_page]
+        _10_page,
+        E2lab_FinalPage]

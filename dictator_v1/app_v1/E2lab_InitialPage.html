@@ -1,0 +1,87 @@
+
+<!-- STYLES-->
+<style>
+    body {
+        background-color: black;
+        color: white;
+        font-family: 'dotumche-pixel', sans-serif;
+        font-size: 20px;
+        text-align: center;
+        line-height: 2;
+    }
+    #container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    } 
+    #text-container span {
+        opacity: 0;
+      }
+      .otree-title.page-header {
+      margin-top: 40px;
+      margin-bottom: 00px;
+      padding-top: 0px;
+    }
+    .form-select {
+      background-color: white;
+      color: black; 
+      font-size: 1rem; 
+    }
+    .col-form-label {
+      font-size: 16px;
+    }
+    .controls {
+      text-align: center; 
+      margin: 0 auto;
+    }
+</style>
+<!-- Custom font -->
+<style>
+    @font-face {
+        font-family: 'dotumche-pixel';
+        src: url(fonts/dotumche-pixel.ttf);
+    }
+</style>
+
+<!-- SCRIPTS-->
+
+{% block title %}
+Página de bienvenida
+{% endblock %}
+
+{% block content %}
+</p>
+Bienvenido al Laboratorio de Economía Experimental de la Universidad del Pacífico.
+</p>
+</p>
+Gracias por participar en este estudio.
+</p>
+</p>
+El experimento que verá a continuación se está realizando con el apoyo oficial del E2LabUP y cuenta con la aprobación ética de la universidad.
+</p>
+</p>
+Está prohibido el uso de este logo sin autorización del laboratorio.
+</p>
+
+</p>
+Para que salga lo mejor posible, te rogamos te mantengas frente a la computadora todo el tiempo y participes activamente.
+</p>
+
+{% next_button %}   
+
+<b>Contáctenos:</b>
+<br>
+<img height="2%" width="2%" src="{% static 'whatsapp.png'%}"/> <a href="https://wa.me/0051985730063" target="_blank">+51 985730063</a>
+<br>
+<img height="2%" width="2%" src="{% static 'gmail.png'%}"/> <a href="https://mail.google.com/mail/?view=cm&fs=1&to=e2lab@up.edu.pe" target="_blank">e2lab@up.edu.pe</a> 
+<br>
+<img height=10% width=20% src="{% static 'logoup.png'%}"/>
+
+{% endblock %}
+
+{{ endblock }}

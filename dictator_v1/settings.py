@@ -11,6 +11,7 @@ SESSION_CONFIGS = [
         app_sequence=['app_v1'],
         num_demo_participants=6,
     ),
+    
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
