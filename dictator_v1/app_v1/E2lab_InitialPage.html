@@ -1,4 +1,4 @@
-
+{% block styles %}
 <!-- STYLES-->
 <style>
     body {
@@ -47,8 +47,9 @@
         src: url(fonts/dotumche-pixel.ttf);
     }
 </style>
-
 <!-- SCRIPTS-->
+{% endblock %}
+
 
 {% block title %}
 Página de bienvenida
@@ -83,5 +84,3 @@ Para que salga lo mejor posible, te rogamos te mantengas frente a la computadora
 <img height=10% width=20% src="{% static 'logoup.png'%}"/>
 
 {% endblock %}
-
-{{ endblock }}
