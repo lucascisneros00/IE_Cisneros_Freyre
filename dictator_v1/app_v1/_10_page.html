@@ -41,6 +41,10 @@
 <!-- SCRIPTS-->
 <body>
   <div id="text-container"></div>
+       <!-- Wrap the default oTree "Next" button in a div with an ID and initially set its style to "display:none" -->
+       <div id="next-btn-wrapper" style="display:none;">
+        {{ next_button }}
+      </div>
   <script>
     function displayTextSequentially_v2(text, element, callback) {
       var letters = text.split("");
@@ -68,7 +72,7 @@
       }, 70 * spans.length);
     }
 
-    function generateTexts_v2(texts, displayInterval, parentElement) {
+    function generateTexts_v2(texts, displayInterval, parentElement, callback) {
       var i = 0;
 
       function displayNextText() {
@@ -80,24 +84,34 @@
             i++;
             setTimeout(displayNextText, displayInterval);
           });
+        } else {
+          if (callback) {
+            callback();
+          }
         }
       }
+
 
       displayNextText();
     }
     var js_random_code = "{{ player.random_code }}"
     var js_finalpayoff = "{{ player_finalpayoff }}"
 
-    var input1 = "Tu código de confirmación de culminación del experimento es " + js_random_code + ". Te recordamos que lo anotes para poder proceder con tu pago."
-    var input2 = "Para la realización del pago, deberás previamente llenar y firmar el Recibo de Recepción de Pago con el monto indicado:" 
+    //var input1 = "Tu código de confirmación de culminación del experimento es " + js_random_code + ". Te recordamos que lo anotes para poder proceder con tu pago."
+    var input2 = "Cuando reciba el pago por este experimento, deberá llenar y firmar un Recibo de Recepción de Pago con el monto indicado:" 
     var input3 = " * * " + js_finalpayoff + " * * "
-    var input4 = " y enviar el documento escaneado a los correos l.cisnerosd@alum.up.edu.pe y a.freyrea@alum.up.edu.pe a la brevedad posible."
-    var input5 = "En dicho correo, deberás indicar el código de confirmación, la billetera digital de tu preferencia (Yape o Plin), así como el número de teléfono asociado. Luego del envío de dicho correo, tu pago será procesado en un máximo de 48 horas y se te enviará un correo de confirmación del pago."
-    generateTexts_v2([input1,
+    var input4 = "Este documento se le mandará por medio de correo electónico luego de realizarse el pago. Por favor, responder a este correo en la menor brevedad posible."
+    //var input5 = "En dicho correo, deberás indicar el código de confirmación, la billetera digital de tu preferencia (Yape o Plin), así como el número de teléfono asociado. Luego del envío de dicho correo, tu pago será procesado en un máximo de 48 horas y se te enviará un correo de confirmación del pago."
+    generateTexts_v2([//input1,
             input2,
             input3,
             input4,
-            input5], 50, document.getElementById("text-container"));
+            //input5
+          ], 50, document.getElementById("text-container"),
+          function() {
+        $('#next-btn-wrapper').fadeIn();
+      }
+      );
   </script>
 </body>
 
