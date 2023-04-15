@@ -84,11 +84,11 @@ def creating_session(subsession: Subsession):
         # Assign players to control, t1, t2 groups
         p.order_number_reshuffled = i
         if p.order_number_reshuffled<len(players)*1/3:
-            p.treatment = 'C' 
+            p.treatment = 'T2' 
         elif p.order_number_reshuffled<len(players)*2/3:
             p.treatment = 'T1' 
         else:
-            p.treatment = 'T2' 
+            p.treatment = 'C' 
         
            
 def set_payoffs(group: Group):
