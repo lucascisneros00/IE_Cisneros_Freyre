@@ -83,9 +83,9 @@ def creating_session(subsession: Subsession):
     for i, p in enumerate(players, start=1):
         # Assign players to control, t1, t2 groups
         p.order_number_reshuffled = i
-        if p.order_number_reshuffled<len(players)*1/3:
+        if p.order_number_reshuffled<6:
             p.treatment = 'C' 
-        elif p.order_number_reshuffled<len(players)*2/3:
+        elif p.order_number_reshuffled<8:
             p.treatment = 'T1' 
         else:
             p.treatment = 'T2' 
@@ -206,7 +206,7 @@ class E2lab_FinalPage(Page):
         return dict(participant_id=self.participant.label)
      
 page_sequence = [
-        # TestPage,TestPage2, 
+       # TestPage,TestPage2, 
         E2lab_InitialPage,
         WaitAssign,
         _0_page,
